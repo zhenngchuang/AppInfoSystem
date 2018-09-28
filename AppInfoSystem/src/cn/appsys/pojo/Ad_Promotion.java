@@ -21,7 +21,7 @@ public class Ad_Promotion implements Serializable{
 		private int createdBy;//创建时间
 		private Date creationDate;//创建时间
 		private int modifyBy;//修改者
-		private Date modifyDate;//最后修改时间
+		private Date modifyDate;//最后修改时间 
 		public int getId() {
 			return id;
 		}
