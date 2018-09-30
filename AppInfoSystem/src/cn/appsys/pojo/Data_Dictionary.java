@@ -16,7 +16,7 @@ public class Data_Dictionary implements Serializable{
 		private int id ;//编号
 		private String typeCode;//类型编码
 		private String typeName;//类型名称
-		private int valueld;//类型值ID
+		private int valueId;//类型值ID
 		private String valueName;//类型值名称
 		private int createdBy;//创建时间
 		private Date creationDate;//创建时间
@@ -40,11 +40,12 @@ public class Data_Dictionary implements Serializable{
 		public void setTypeName(String typeName) {
 			this.typeName = typeName;
 		}
-		public int getValueld() {
-			return valueld;
+	
+		public int getValueId() {
+			return valueId;
 		}
-		public void setValueld(int valueld) {
-			this.valueld = valueld;
+		public void setValueId(int valueId) {
+			this.valueId = valueId;
 		}
 		public String getValueName() {
 			return valueName;

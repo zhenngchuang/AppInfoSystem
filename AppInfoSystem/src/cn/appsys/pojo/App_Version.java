@@ -24,6 +24,14 @@ public class App_Version implements Serializable{
 		private Date creationDate;//创建时间
 		private int modifyBy;//修改者
 		private Date modifyDate;//最后修改时间
+		private String apkFileName;//apk文件名
+		
+		public String getApkFileName() {
+			return apkFileName;
+		}
+		public void setApkFileName(String apkFileName) {
+			this.apkFileName = apkFileName;
+		}
 		public int getId() {
 			return id;
 		}

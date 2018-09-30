@@ -120,7 +120,7 @@
 				class="dataTables_wrapper form-inline dt-bootstrap no-footer">
 				<div class="row">
 					<div class="col-sm-12">
-					<a href="${pageContext.request.contextPath}/dev/flatform/app/appinfoadd" class="btn btn-success btn-sm">新增APP基础信息</a>
+					<a href="${pageContext.request.contextPath}/sys/dev/appinfoadd" class="btn btn-success btn-sm">新增APP基础信息</a>
 						<table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap dataTable no-footer dtr-inline collapsed"
 							cellspacing="0" width="100%" role="grid" aria-describedby="datatable-responsive_info" style="width: 100%;">
 							<thead>
@@ -176,9 +176,7 @@
 										<td>${appInfo.downloads }</td>
 										<td>${appInfo.versionNo }</td>
 										<td>
-										
-										
-										<div class="btn-group">
+									<div class="btn-group">
                       <button type="button" class="btn btn-danger">点击操作</button>
                       <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <span class="caret"></span>

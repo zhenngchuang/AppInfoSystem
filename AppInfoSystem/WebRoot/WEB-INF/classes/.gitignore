@@ -1,5 +1,5 @@
 /META-INF/
-/applicationContext.xml
+/applicationContext-mybatis.xml
 /cn/
 /database.properties
 /log4j.properties

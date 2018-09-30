@@ -9,10 +9,7 @@ $("#queryCategoryLevel1").change(function(){
 			success:function(data){//data：返回数据（json对象）
 				$("#queryCategoryLevel2").html("");
 				var options = "<option value=\"\">--请选择--</option>";
-				for(var i = 0; i < data.length; i++){
-					
-					
-					
+				for(var i = 0; i < data.length; i++){															
 					options += "<option value=\""+data[i].id+"\">"+data[i].categoryName+"</option>";
 				}
 				$("#queryCategoryLevel2").html(options);
@@ -175,7 +172,7 @@ var saleSwitchAjax = function(appId,obj){
 
 $(".viewApp").on("click",function(){
 	var obj = $(this);
-	window.location.href="appview/"+ obj.attr("appinfoid");
+	window.location.href="appview?appinfoid="+ obj.attr("appinfoid");
 });
 
 $(".deleteApp").on("click",function(){

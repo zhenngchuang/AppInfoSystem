@@ -16,16 +16,17 @@ public class App_Info implements Serializable{
 		private int id;//APP编号
 		private String softwareName;//软件名称
 		private String APKName;//APK名称
-		private String supportRom;//支持ROM
+		private String supportROM;//支持ROM
 		private String interfaceLanguage;//界面语言
 		private  Float softwareSize;//软件大小
 		private Date updateDate;//更新时间
-		private int devld;//开发者ID
-		private String appinfo;//应用简介
+		private int devId;//开发者ID
+		private String appInfo;//应用简介
 		private int status;//当前状态
 		private Date inSaleDate;//上架时间
 		private Date offSaleDate;//下架时间
-		private int flatformld;//所属平台
+		private int flatformId;//所属平台
+		private String flatformName;//平台名称
 		private int categoryLevel3;//所属三级分类
 		private int downloads;//下载量
 		private int createdBy;//创建时间
@@ -36,7 +37,50 @@ public class App_Info implements Serializable{
 		private int categoryLevel2;//所属二级分类
 		private String logoPicPath;//Logo图片url地址
 		private String logoLocPath;//LOGo图片存放位置
-		private int versionld;//最新版本ID
+		private int versionId;//最新版本ID
+		private String categoryLevel1Name;//一级分类名称
+		private String categoryLevel2Name;//二级分类名称
+		private String categoryLevel3Name;//三级分类名称
+		private String statusName;//状态名称
+		private String versionNo;//版本号
+		
+	
+		public String getVersionNo() {
+			return versionNo;
+		}
+		public void setVersionNo(String versionNo) {
+			this.versionNo = versionNo;
+		}
+		public String getStatusName() {
+			return statusName;
+		}
+		public void setStatusName(String statusName) {
+			this.statusName = statusName;
+		}
+		public String getCategoryLevel1Name() {
+			return categoryLevel1Name;
+		}
+		public void setCategoryLevel1Name(String categoryLevel1Name) {
+			this.categoryLevel1Name = categoryLevel1Name;
+		}
+		public String getCategoryLevel2Name() {
+			return categoryLevel2Name;
+		}
+		public void setCategoryLevel2Name(String categoryLevel2Name) {
+			this.categoryLevel2Name = categoryLevel2Name;
+		}
+		public String getCategoryLevel3Name() {
+			return categoryLevel3Name;
+		}
+		public void setCategoryLevel3Name(String categoryLevel3Name) {
+			this.categoryLevel3Name = categoryLevel3Name;
+		}
+		public String getFlatformName() {
+			return flatformName;
+		}
+		public void setFlatformName(String flatformName) {
+			this.flatformName = flatformName;
+		}
 		public int getId() {
 			return id;
 		}
@@ -55,11 +99,18 @@ public class App_Info implements Serializable{
 		public void setAPKName(String aPKName) {
 			APKName = aPKName;
 		}
-		public String getSupportRom() {
-			return supportRom;
+		public int getFlatformId() {
+			return flatformId;
 		}
-		public void setSupportRom(String supportRom) {
-			this.supportRom = supportRom;
+		public void setFlatformId(int flatformId) {
+			this.flatformId = flatformId;
+		}
+	
+		public String getSupportROM() {
+			return supportROM;
+		}
+		public void setSupportROM(String supportROM) {
+			this.supportROM = supportROM;
 		}
 		public String getInterfaceLanguage() {
 			return interfaceLanguage;
@@ -79,17 +130,18 @@ public class App_Info implements Serializable{
 		public void setUpdateDate(Date updateDate) {
 			this.updateDate = updateDate;
 		}
-		public int getDevld() {
-			return devld;
+	
+		public int getDevId() {
+			return devId;
 		}
-		public void setDevld(int devld) {
-			this.devld = devld;
+		public void setDevId(int devId) {
+			this.devId = devId;
 		}
-		public String getAppinfo() {
-			return appinfo;
+		public String getAppInfo() {
+			return appInfo;
 		}
-		public void setAppinfo(String appinfo) {
-			this.appinfo = appinfo;
+		public void setAppInfo(String appInfo) {
+			this.appInfo = appInfo;
 		}
 		public int getStatus() {
 			return status;
@@ -109,12 +161,7 @@ public class App_Info implements Serializable{
 		public void setOffSaleDate(Date offSaleDate) {
 			this.offSaleDate = offSaleDate;
 		}
-		public int getFlatformld() {
-			return flatformld;
-		}
-		public void setFlatformld(int flatformld) {
-			this.flatformld = flatformld;
-		}
+	
 		public int getCategoryLevel3() {
 			return categoryLevel3;
 		}
@@ -175,11 +222,12 @@ public class App_Info implements Serializable{
 		public void setLogoLocPath(String logoLocPath) {
 			this.logoLocPath = logoLocPath;
 		}
-		public int getVersionld() {
-			return versionld;
+	
+		public int getVersionId() {
+			return versionId;
 		}
-		public void setVersionld(int versionld) {
-			this.versionld = versionld;
+		public void setVersionId(int versionId) {
+			this.versionId = versionId;
 		}
 		public static long getSerialversionuid() {
 			return serialVersionUID;

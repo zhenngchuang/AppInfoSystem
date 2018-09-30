@@ -22,6 +22,14 @@ public class Backend_User implements Serializable{
 		private Date creationDate;//创建时间
 		private int modifBy;//修改人编号
 		private Date modifyDate;//修改时间
+		private String userTypeName;  // 用户类型名称
+		
+		public String getUserTypeName() {
+			return userTypeName;
+		}
+		public void setUserTypeName(String userTypeName) {
+			this.userTypeName = userTypeName;
+		}
 		public int getId() {
 			return id;
 		}
