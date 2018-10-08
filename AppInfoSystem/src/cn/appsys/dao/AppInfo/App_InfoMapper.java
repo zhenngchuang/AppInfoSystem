@@ -43,5 +43,5 @@ public interface App_InfoMapper {
 	 * @throws Exception
 	 */
 	public int updateSatus(@Param(value="status")Integer status,@Param(value="id")Integer id)throws Exception;
-
+	
 }

@@ -19,5 +19,6 @@ public class AppCategoryServiceImpl implements AppCategoryService {
 		// TODO Auto-generated method stub
 		return appCategoryMapper.getAppCategoryListByParentId(parentId);
 	}
+	
 
 }

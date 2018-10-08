@@ -1,15 +1,21 @@
 package cn.appsys.controller;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.io.FilenameUtils;
+
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,7 +32,6 @@ import cn.appsys.service.AppVersion.AppVersionService;
 import cn.appsys.service.DataDictionary.DataDictionaryService;
 import cn.appsys.tools.Constants;
 import cn.appsys.tools.PageSupport;
-
 
 
 
@@ -157,25 +162,148 @@ public class DeveController {
 	@ResponseBody
 	public List<App_Category> getcategory(@RequestParam("pid") String pid) {
 		List<App_Category> categorylist= new ArrayList<App_Category>();
-		Integer parentId=Integer.parseInt(pid);
-		categorylist=appCategoryService.getAppCategoryListByParentId(parentId);
+		if(pid.equals("")||pid==null) {			
+			categorylist=appCategoryService.getAppCategoryListByParentId(null);
+		}else {
+			Integer parentId=Integer.parseInt(pid);
+			categorylist=appCategoryService.getAppCategoryListByParentId(parentId);
+		}
+		
 		return categorylist;
 	}
 	/**;
 	 * 新增App页面跳转处理
 	 */
 	@RequestMapping(value="/appinfoadd",method=RequestMethod.GET)
-	public String appinfoadd() {
+	public String appinfoadd(Model model ) {
+		App_Info appinfo =new App_Info();
+		model.addAttribute(appinfo);
+		List<App_Category> categoryLevel1List = null;//列出一级分类列表，注：二级和三级分类列表通过异步ajax获取
+		//获取所有的一级分类
+		categoryLevel1List=appCategoryService.getAppCategoryListByParentId(null);
+		model.addAttribute("categoryLevel1List", categoryLevel1List);
 		return "developer/appinfoadd";
 	}
-	
+	/**
+	 * 获取平台列表
+	 */
+	@RequestMapping(value="/datadictionarylist.json",method=RequestMethod.GET)
+	@ResponseBody
+	public List<Data_Dictionary> datadictionary(@RequestParam("tcode") String tcode) {
+		List<Data_Dictionary> categorylist= new ArrayList<Data_Dictionary>();
+		categorylist=dataDictionaryService.getDataDictionaryList(tcode);
+		return categorylist;
+	}
 	/**
 	 * 新增App保存页面
 	 */
-	@RequestMapping(value="/appinfoaddsave",method=RequestMethod.POST)
+	@RequestMapping(value="/appinfoaddsave",method=RequestMethod.GET)
 	public String appinfoaddsave(App_Info appInfo, HttpSession session, HttpServletRequest request,
-			@RequestParam(value = "a_logoPicPath", required = false) MultipartFile attach) {
-		return "developer/appinfolist";
+			@RequestParam(value = "attachs", required = false) MultipartFile [] attachs) {
+		App_Info appinfo =new App_Info();
+		String a_logoPicPath = null;
+		String workPicPath = null;
+		String errorInfo = null;
+		boolean flag = true;
+		// 文件上传的真实路径
+//		String path=request.getSession().getServletContext().getRealPath("static"+File.separator+"uploadfiles");
+		String path = "E:" + File.separator + "pictures";
+		// 判断文件是否为空
+		for (int i = 0; i < attachs.length; i++) {
+			MultipartFile attach = attachs[i];
+			if (!attach.isEmpty()) {
+				if (i == 0) {
+					errorInfo = "uploadFileError";
+				} else if (i == 1) {
+					errorInfo = "uploadWpError";
+				}
+				String oldFileName = attach.getOriginalFilename();// 原文件名
+				String prefix = FilenameUtils.getExtension(oldFileName);// 原文件名后缀
+				int filessize = 500000;
+				if (attach.getSize() > filessize) {
+					request.setAttribute(errorInfo, "上传大小不得超过500Kb");
+					flag = false;
+				} else if (prefix.equalsIgnoreCase("jpg")// 上传图片格式不正确
+						|| prefix.equalsIgnoreCase("png") || prefix.equalsIgnoreCase("jpeg")
+						|| prefix.equalsIgnoreCase("peng")) {
+					// 随机产生一个文件名
+//					String fileName = System.currentTimeMillis() + RandomUtils.nextInt(1000000) + "_Personal.jpg";
+					// 创建文件上传路径 如果不存在就创建一个
+					File targetFile = new File(path);
+					if (!targetFile.exists()) {
+						targetFile.mkdirs();
+
+					}
+					// 保存
+					try {
+						attach.transferTo(targetFile);
+					} catch (Exception e) {
+						e.printStackTrace();
+						request.setAttribute(errorInfo, "上传失败");
+						flag = false;
+					}
+					if (i == 0) {
+						// 把最终的文件路径和文件名封装成对象的图片属性值
+//						idPicPath =path+File.separator+fileName;
+						a_logoPicPath = path;
+					} else if (i == 1) {
+
+//						workPicPath=path+File.separator+fileName;
+						workPicPath = path;
+					}
+				} else {
+					request.setAttribute(errorInfo, "上传图片格式不正确");
+					flag = false;
+				}
+
+			}
+
+		}
+		if (flag) {
+			appinfo.setCreatedBy(((App_Info) session.getAttribute(Constants.USER_SESSION)).getId());
+			appinfo.setCreationDate(new Date());
+			appinfo.setLogoPicPath(a_logoPicPath);
+			if (appInfoService.addinfoadd(appinfo) > 0) {
+				return "developer/appinfolist";
+			}
+		}
+
+		return "appinfoadd";
+		
+		
+	}
+	
+	/**
+	 * 验证Apk名称是否重复
+	 */
+	@RequestMapping(value="/apkexist.json",method=RequestMethod.GET)
+	@ResponseBody
+	public Map apkexist(@RequestParam("APKName") String APKName) {
+		List<App_Info> appinfolist=new ArrayList<>();
+		appinfolist=appInfoService.pageAppInfo(null, null, null, null, null, null, null, null, null);
+		Map<String,String> APKname=  new HashMap<String,String>();
+		//判断输入的名称是否为空
+		if(APKName==null ||APKName.equals("")) {
+			APKname.put("APKName", "empty");
+			return APKname;
+		}else {
+			//获取所有的info对象进行循环遍历
+			for(App_Info apinfo:appinfolist) {
+				//如果对象的名称等于输入返回已经存在
+				if(apinfo.getAPKName().equals(APKname)) {
+					APKname.put("APKName", "exist");
+					return APKname;
+				}else {
+					//否则返回不存在
+					APKname.put("APKName", "noexist");
+					return APKname;
+				}
+				
+			}
+			
+		}
+		
+		return APKname;
 	}
 	
 	/**

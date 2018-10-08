@@ -43,8 +43,7 @@ public class AppInfoServiceImpl implements AppInfoService {
 	 * ∑÷“≥œ‘ æ
 	 */
 	public List<App_Info> pageAppInfo(String softwareName, Integer status, Integer flatformId, Integer categoryLevel1,
-			Integer categoryLevel2, Integer categoryLevel3, Integer currentPageNo,Integer pageSize,Integer id) {
-	
+			Integer categoryLevel2, Integer categoryLevel3, Integer currentPageNo,Integer pageSize,Integer id) {	
 		return appinfomapper.pageAppInfo(softwareName, status, flatformId, categoryLevel1, categoryLevel2,
 				categoryLevel3, (currentPageNo-1)*pageSize,pageSize,id);
 	}

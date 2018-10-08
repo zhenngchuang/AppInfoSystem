@@ -62,7 +62,7 @@ public class LoginController {
 	public String logout(HttpSession session){
 		//Çå³ýsession
 		session.removeAttribute(Constants.USER_SESSION);
-		return "backendlogin";
+		return "/backendlogin";
 	}
 	
 	/**
@@ -85,5 +85,11 @@ public class LoginController {
 	@RequestMapping(value="/appinfolist",method=RequestMethod.GET)
 	public String appinfo(HttpSession session){
 		return "/developer/main";
+	}
+	@RequestMapping(value="/dev/logout")
+	public String devlogout(HttpSession session){
+		//Çå³ýsession
+		session.removeAttribute(Constants.DEV_USER_SESSION);
+		return "devlogin";
 	}
 }

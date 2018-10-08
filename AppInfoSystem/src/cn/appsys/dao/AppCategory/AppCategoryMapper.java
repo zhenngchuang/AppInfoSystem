@@ -14,5 +14,5 @@ public interface AppCategoryMapper {
 		 * @return
 		 */
 		public List<App_Category> getAppCategoryListByParentId(@Param("parentId")Integer parentId);
-
+	
 }

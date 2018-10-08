@@ -104,5 +104,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			set status=#{status}
 			where id = #{id}
 	</update>
+	
+	<!-- 增加一条APP信息 -->
+	<insert id="addinfoadd">
+		insert into app_info (softwareName,APKName,supportROM,interfaceLanguage,
+		softwareSize,appInfo,devId,inSaleDate,flatformId,categoryLevel3,downloads,createdBy,
+		creationDate,categoryLevel1,categoryLevel2,logoPicPath,logoLocPath)value(
+		#{softwareName},#{APKName},#{supportROM},#{interfaceLanguage},#{softwareSize},
+		#{appInfo},#{devId},#{inSaleDate},#{flatformId},#{categoryLevel3},#{downloads},
+		#{createdBy},#{creationDate},#{categoryLevel1},#{categoryLevel2},#{logoPicPath},#{logoLocPath}		
+		)
+	
+	
+	</insert>
 </mapper>
 
